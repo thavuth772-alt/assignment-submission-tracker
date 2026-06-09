@@ -1,0 +1,24 @@
+.container{
+  text-align:center;
+  padding:20px;
+}
+
+input{
+  padding:10px;
+  width:250px;
+  margin:20px;
+}
+
+.student-list{
+  display:flex;
+  justify-content:center;
+  gap:20px;
+  flex-wrap:wrap;
+}
+
+.card{
+  border:1px solid gray;
+  padding:20px;
+  width:150px;
+  border-radius:10px;
+}

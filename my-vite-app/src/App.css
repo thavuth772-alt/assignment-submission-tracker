@@ -1,0 +1,77 @@
+body {
+  font-family: Arial, sans-serif;
+  background: #f4f6f9;
+  margin: 0;
+}
+
+.container {
+  width: 90%;
+  margin: auto;
+  padding: 20px;
+}
+
+h1 {
+  text-align: center;
+}
+
+.dashboard {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+.card {
+  flex: 1;
+  background: white;
+  padding: 15px;
+  text-align: center;
+  border-radius: 8px;
+  box-shadow: 0 0 5px gray;
+}
+
+.form {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.form input,
+.form select {
+  padding: 10px;
+}
+
+button {
+  padding: 10px 20px;
+  cursor: pointer;
+  background: #007bff;
+  color: white;
+  border: none;
+}
+
+.filter {
+  margin-bottom: 20px;
+}
+
+.filter input {
+  padding: 10px;
+  width: 250px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+}
+
+table th,
+table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: center;
+}
+
+table th {
+  background: #007bff;
+  color: white;
+}
