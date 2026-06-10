@@ -1,0 +1,1 @@
+.search-box{width:300px;margin:20px;padding:12px;font-size:16px}.cards{grid-template-columns:repeat(3,1fr);gap:25px;padding:20px;display:grid}.card{text-align:center;border:1px solid #ccc;border-radius:10px;padding:20px;box-shadow:0 0 10px #ddd}.card img{width:80px;height:50px}.danger{color:red}.safe{color:green}
