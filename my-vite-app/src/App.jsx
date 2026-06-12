@@ -1,143 +1,137 @@
 import React, { useState } from "react";
 import "./App.css";
-import CovidTracker from "./CovidTracker";
 
 function App() {
-  const [page, setPage] = useState("covid");
+  const [leaves, setLeaves] = useState([]);
+  const [form, setForm] = useState({
+    name: "",
+    leaveType: "",
+    fromDate: "",
+    toDate: "",
+    reason: ""
+  });
 
-  return (
-    <div>
-      <div className="nav-buttons">
-        <button onClick={() => setPage("attendance")}>
-          Attendance Dashboard
-        </button>
-
-        <button onClick={() => setPage("covid")}>
-          COVID Tracker
-        </button>
-      </div>
-
-      {page === "attendance" ? (
-        <AttendanceDashboard />
-      ) : (
-        <CovidTracker />
-      )}
-    </div>
-  );
-}
-
-function AttendanceDashboard() {
-  const [batch, setBatch] = useState("Batch A");
-  const [date, setDate] = useState("");
-  const [attendance, setAttendance] = useState([]);
-
-  const students = {
-    "Batch A": ["Arun", "Bala", "Divya", "Kumar"],
-    "Batch B": ["Priya", "Rahul", "Sneha", "Vijay"],
-    "Batch C": ["John", "Meena", "Surya", "Anu"],
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const markAttendance = (student, status) => {
-    if (!date) {
-      alert("Please select date");
-      return;
-    }
+  const applyLeave = (e) => {
+    e.preventDefault();
 
-    const updatedAttendance = attendance.filter(
-      (item) =>
-        !(item.student === student && item.batch === batch && item.date === date)
+    const newLeave = {
+      id: Date.now(),
+      ...form,
+      status: "Pending"
+    };
+
+    setLeaves([...leaves, newLeave]);
+
+    setForm({
+      name: "",
+      leaveType: "",
+      fromDate: "",
+      toDate: "",
+      reason: ""
+    });
+  };
+
+  const updateStatus = (id, status) => {
+    setLeaves(
+      leaves.map((leave) =>
+        leave.id === id ? { ...leave, status } : leave
+      )
     );
-
-    setAttendance([...updatedAttendance, { student, batch, date, status }]);
   };
-
-  const filteredAttendance = attendance.filter(
-    (item) => item.batch === batch && (date === "" || item.date === date)
-  );
-
-  const percentage =
-    filteredAttendance.length === 0
-      ? 0
-      : (
-          (filteredAttendance.filter((item) => item.status === "Present")
-            .length /
-            filteredAttendance.length) *
-          100
-        ).toFixed(2);
 
   return (
     <div className="container">
-      <h1>Trainer Session Attendance Dashboard</h1>
+      <h1>HR Employee Leave Management Tool</h1>
 
-      <div className="filters">
-        <select value={batch} onChange={(e) => setBatch(e.target.value)}>
-          <option>Batch A</option>
-          <option>Batch B</option>
-          <option>Batch C</option>
+      <form onSubmit={applyLeave} className="leave-form">
+        <input
+          type="text"
+          name="name"
+          placeholder="Employee Name"
+          value={form.name}
+          onChange={handleChange}
+          required
+        />
+
+        <select
+          name="leaveType"
+          value={form.leaveType}
+          onChange={handleChange}
+          required
+        >
+          <option value="">Select Leave Type</option>
+          <option value="Sick Leave">Sick Leave</option>
+          <option value="Casual Leave">Casual Leave</option>
+          <option value="Earned Leave">Earned Leave</option>
         </select>
 
         <input
           type="date"
-          value={date}
-          onChange={(e) => setDate(e.target.value)}
+          name="fromDate"
+          value={form.fromDate}
+          onChange={handleChange}
+          required
         />
-      </div>
 
-      <h2>Mark Attendance - {batch}</h2>
+        <input
+          type="date"
+          name="toDate"
+          value={form.toDate}
+          onChange={handleChange}
+          required
+        />
 
-      <table>
-        <thead>
-          <tr>
-            <th>Student Name</th>
-            <th>Present</th>
-            <th>Absent</th>
-          </tr>
-        </thead>
+        <textarea
+          name="reason"
+          placeholder="Reason for Leave"
+          value={form.reason}
+          onChange={handleChange}
+          required
+        ></textarea>
 
-        <tbody>
-          {students[batch].map((student) => (
-            <tr key={student}>
-              <td>{student}</td>
-              <td>
-                <button onClick={() => markAttendance(student, "Present")}>
-                  Present
-                </button>
-              </td>
-              <td>
-                <button onClick={() => markAttendance(student, "Absent")}>
-                  Absent
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+        <button type="submit">Apply Leave</button>
+      </form>
 
-      <h2>Batch-wise Attendance</h2>
+      <h2>Leave Requests</h2>
 
       <table>
         <thead>
           <tr>
-            <th>Date</th>
-            <th>Batch</th>
-            <th>Student</th>
+            <th>Employee</th>
+            <th>Leave Type</th>
+            <th>From</th>
+            <th>To</th>
+            <th>Reason</th>
             <th>Status</th>
+            <th>HR Action</th>
           </tr>
         </thead>
 
         <tbody>
-          {filteredAttendance.map((item, index) => (
-            <tr key={index}>
-              <td>{item.date}</td>
-              <td>{item.batch}</td>
-              <td>{item.student}</td>
-              <td>{item.status}</td>
+          {leaves.map((leave) => (
+            <tr key={leave.id}>
+              <td>{leave.name}</td>
+              <td>{leave.leaveType}</td>
+              <td>{leave.fromDate}</td>
+              <td>{leave.toDate}</td>
+              <td>{leave.reason}</td>
+              <td>{leave.status}</td>
+              <td>
+                <button onClick={() => updateStatus(leave.id, "Approved")}>
+                  Approve
+                </button>
+                <button onClick={() => updateStatus(leave.id, "Rejected")}>
+                  Reject
+                </button>
+              </td>
             </tr>
           ))}
         </tbody>
       </table>
-
-      <h2>Attendance Percentage: {percentage}%</h2>
     </div>
   );
 }

@@ -1,34 +1,50 @@
-.search-box {
-  padding: 12px;
-  width: 300px;
-  margin: 20px;
-  font-size: 16px;
+.container {
+  width: 90%;
+  margin: auto;
+  font-family: Arial, sans-serif;
 }
 
-.cards {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 25px;
-  padding: 20px;
-}
-
-.card {
-  border: 1px solid #ccc;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 0 10px #ddd;
+h1, h2 {
   text-align: center;
 }
 
-.card img {
-  width: 80px;
-  height: 50px;
+.leave-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 30px;
 }
 
-.danger {
-  color: red;
+input, select, textarea {
+  padding: 10px;
+  font-size: 16px;
 }
 
-.safe {
-  color: green;
+button {
+  padding: 8px 12px;
+  margin: 3px;
+  cursor: pointer;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  border-radius: 5px;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: center;
+}
+
+th {
+  background-color: #f2f2f2;
 }
